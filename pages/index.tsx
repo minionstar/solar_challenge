@@ -11,25 +11,21 @@ const Home: NextPage = () => {
   const { address, isConnecting, isDisconnected } = useAccount();
   const [amount, setAmount] = useState(0);
 
-  let value:any = 0;
-  if (isDisconnected) {
-    value = 0;
-  } else {
-    const result = useContractRead({
-      address: "0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
-      abi: abi,
-      functionName: "balanceOf",
-      args: ['0x04068DA6C83AFCFA0e13ba15A6696662335D5B75'],
-    });
-    if (result?.data) {
-      value = ethers.utils.formatUnits(BigNumber.from(result?.data), 6);
-    }
+  let value: any = 0;
+  const result = useContractRead({
+    address: "0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
+    abi: abi,
+    functionName: "balanceOf",
+    args: ['0x04068DA6C83AFCFA0e13ba15A6696662335D5B75'],
+  });
+  if (result?.data) {
+    value = ethers.utils.formatUnits(BigNumber.from(result?.data), 6);
   }
 
   useEffect(() => {
-    setAmount(value)
+    setAmount(value);
   }, [value]);
-  
+
   return (
     <div className={styles.container}>
       <Head>
